@@ -44,6 +44,20 @@ curl -fsSL -o code_guidelines.md "https://raw.githubusercontent.com/traedamatic/
 echo "Downloading CLAUDE.md..."
 curl -fsSL -o CLAUDE.md "https://raw.githubusercontent.com/traedamatic/init/main/CLAUDE.md"
 
+# Install Claude Code global commands (el- engineer loop)
+CLAUDE_COMMANDS_DIR="$HOME/.claude/commands"
+mkdir -p "$CLAUDE_COMMANDS_DIR"
+
+echo "Installing Claude Code commands..."
+for cmd in el-create-ticket el-dev-loop; do
+  if [ ! -f "$CLAUDE_COMMANDS_DIR/$cmd.md" ]; then
+    curl -fsSL -o "$CLAUDE_COMMANDS_DIR/$cmd.md" "https://raw.githubusercontent.com/traedamatic/init/main/commands/$cmd.md"
+    echo "  - Installed /el-$cmd → $CLAUDE_COMMANDS_DIR/$cmd.md"
+  else
+    echo "  - Skipped /$cmd (already exists)"
+  fi
+done
+
 echo ""
 echo "Repository initialized successfully!"
 echo "  - Git initialized with 'main' branch"
@@ -52,5 +66,9 @@ echo "  - core.hooksPath set to git_hooks/"
 echo "  - .gitignore downloaded"
 echo "  - code_guidelines.md downloaded"
 echo "  - CLAUDE.md downloaded"
+echo "  - Claude Code commands installed (el-create-ticket, el-dev-loop)"
 echo ""
-echo "Edit git_hooks/pre-commit to add your hooks."
+echo "Next steps:"
+echo "  1. Edit CLAUDE.md — fill in the GitHub Project section with your project IDs"
+echo "  2. Edit git_hooks/pre-commit to add your hooks"
+echo "  3. Use /el-create-ticket to create tickets and /el-dev-loop to develop them"
