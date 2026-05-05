@@ -28,4 +28,19 @@ echo "Update complete."
 echo "  - code_guidelines.md refreshed in $(pwd)"
 echo "  - el-create-ticket, el-dev-loop refreshed in $CLAUDE_COMMANDS_DIR"
 echo ""
-echo "Run 'git diff code_guidelines.md' to review changes before committing."
+
+if [ -d .git ] || git rev-parse --git-dir >/dev/null 2>&1; then
+  if git diff --quiet -- code_guidelines.md && git diff --cached --quiet -- code_guidelines.md; then
+    echo "No changes to code_guidelines.md — skipping commit."
+  else
+    echo "Committing updated code_guidelines.md..."
+    git add code_guidelines.md
+    git commit -m "chore: sync code_guidelines.md from traedamatic/init
+
+Pulled latest code_guidelines.md from $REPO_RAW via update.sh."
+    echo "  - Created commit for code_guidelines.md"
+  fi
+else
+  echo "Not a git repository — skipping commit."
+  echo "Run 'git diff code_guidelines.md' to review changes before committing."
+fi
