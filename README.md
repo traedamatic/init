@@ -15,6 +15,17 @@ Bootstrap script for new Node.js/Bun/TypeScript repositories with Claude Code wo
 curl -fsSL https://raw.githubusercontent.com/traedamatic/init/main/init.sh | bash -s /path/to/project
 ```
 
+### Updating an existing project
+
+To pull the latest `code_guidelines.md` and refresh the global `el-*` slash commands without re-running `init.sh` (which would overwrite your per-project `CLAUDE.md`):
+
+```bash
+cd /path/to/project
+curl -fsSL https://raw.githubusercontent.com/traedamatic/init/main/update.sh | bash
+```
+
+This refreshes `code_guidelines.md` in the current directory and the global commands in `~/.claude/commands/`. It does **not** touch `CLAUDE.md`, `.gitignore`, or `git_hooks/`. Review with `git diff code_guidelines.md` before committing.
+
 ## Engineer Loop Workflow
 
 Two Claude Code slash commands that create a ticket-driven development loop for any project.
@@ -100,6 +111,7 @@ Phase 2: Develop
 | `code_guidelines.md` | Coding standards for TypeScript/Bun projects |
 | `.gitignore_template` | Standard .gitignore for Node.js/Bun/TypeScript |
 | `init.sh` | Bootstrap script |
+| `update.sh` | Refresh `code_guidelines.md` and global `el-*` commands in an existing project |
 | `commands/el-create-ticket.md` | Claude Code command: create tickets |
 | `commands/el-dev-loop.md` | Claude Code command: development loop |
 
